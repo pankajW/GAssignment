@@ -18,6 +18,7 @@
 		12084ED323DC59DF0055E541 /* ImageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12084ED223DC59DF0055E541 /* ImageStoryboard.storyboard */; };
 		12084ED523DCAF270055E541 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12084ED423DCAF270055E541 /* ImageCell.swift */; };
 		12084ED723DCAF3A0055E541 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12084ED623DCAF3A0055E541 /* ImageCell.xib */; };
+		122E923B23DF4AA000B775E9 /* PWOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122E923A23DF4AA000B775E9 /* PWOperation.swift */; };
 		126DD12423DD86500021028B /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126DD12323DD86500021028B /* ImageDownloadManager.swift */; };
 		126DD12623DD87AC0021028B /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126DD12523DD87AC0021028B /* Protocols.swift */; };
 		129319CE23D8C3CA003AE55F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129319CD23D8C3CA003AE55F /* AppDelegate.swift */; };
@@ -60,6 +61,7 @@
 		12084ED223DC59DF0055E541 /* ImageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageStoryboard.storyboard; sourceTree = "<group>"; };
 		12084ED423DCAF270055E541 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		12084ED623DCAF3A0055E541 /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
+		122E923A23DF4AA000B775E9 /* PWOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PWOperation.swift; sourceTree = "<group>"; };
 		126DD12323DD86500021028B /* ImageDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
 		126DD12523DD87AC0021028B /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		129319CA23D8C3C9003AE55F /* GAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +195,7 @@
 		12084ECF23DC50660055E541 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				122E923A23DF4AA000B775E9 /* PWOperation.swift */,
 				12084ED023DC507D0055E541 /* ImageCollectionConstants.swift */,
 				126DD12323DD86500021028B /* ImageDownloadManager.swift */,
 				126DD12523DD87AC0021028B /* Protocols.swift */,
@@ -400,6 +403,7 @@
 				126DD12623DD87AC0021028B /* Protocols.swift in Sources */,
 				12A99DA823DA130000598848 /* RequestSerializerForm.swift in Sources */,
 				129319D223D8C3CA003AE55F /* ViewController.swift in Sources */,
+				122E923B23DF4AA000B775E9 /* PWOperation.swift in Sources */,
 				12A99D9F23DA0C0400598848 /* APIClient.swift in Sources */,
 				12A99D9823D9F57200598848 /* Service.swift in Sources */,
 				12084ED523DCAF270055E541 /* ImageCell.swift in Sources */,

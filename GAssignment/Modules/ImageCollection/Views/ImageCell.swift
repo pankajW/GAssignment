@@ -11,7 +11,9 @@ import UIKit
 class ImageCell: UICollectionViewCell, ConfigurableCell {
     static let reuseIdentifier = "ImageCell"
     
+    @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     func configure(data: Image) {
