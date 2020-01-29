@@ -1,15 +1,15 @@
 //
 //  RequestSerializerJson.swift
-//  SessionManager
+//  GAssignment
 //
-//  Created by Person, Daniel on 3/27/18.
-//  Copyright © 2018 U.S. Bank. All rights reserved.
+//  Created by Pankaj Wadhwa on 1/25/20.
+//  Copyright © 2020 Pankaj Wadhwa. All rights reserved.
 //
 
 import Foundation
 
-open class RequestSerializerJson: RequestSerializer {
-    open func serialize(_ object: Any) -> Data? {
+class RequestSerializerJson: RequestSerializer {
+    func serialize(_ object: Any) -> Data? {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions.prettyPrinted)
             return jsonData

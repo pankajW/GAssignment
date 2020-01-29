@@ -1,6 +1,6 @@
 //
 //  NetworkClientProtocol.swift
-//  Assignment
+//  GAssignment
 //
 //  Created by Pankaj Wadhwa on 1/23/20.
 //  Copyright © 2020 Pankaj Wadhwa. All rights reserved.

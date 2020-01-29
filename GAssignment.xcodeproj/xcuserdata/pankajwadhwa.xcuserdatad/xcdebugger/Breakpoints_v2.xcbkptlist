@@ -55,32 +55,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E8C229C6-FDB7-4DAA-8218-28BA411A3788"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GAssignment/Modules/ImageCollection/ViewControllers/ImageCollectionViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "collectionView(_:cellForItemAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AD4C6014-E595-4ADD-83D7-C66A3B5FF679"
+            uuid = "264F3783-378F-4613-8D45-DEBFFCEF5F77"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GAssignment/Modules/ImageCollection/ViewControllers/ImageCollectionViewController.swift"
+            filePath = "GAssignment/Networking/ResponseParser/GenericParser.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "collectionView(_:layout:sizeForItemAt:)"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "parse(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

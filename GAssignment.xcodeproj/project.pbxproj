@@ -37,6 +37,8 @@
 		12A99DA923DA130000598848 /* RequestSerializerJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A99DA623DA130000598848 /* RequestSerializerJson.swift */; };
 		12A99DAD23DA193B00598848 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A99DAB23DA193B00598848 /* ResponseParser.swift */; };
 		12A99DAE23DA193B00598848 /* ResponseParserJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A99DAC23DA193B00598848 /* ResponseParserJson.swift */; };
+		12D7A0D823E1F02800C4AFC7 /* LoadingReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D7A0D623E1F02800C4AFC7 /* LoadingReusableView.swift */; };
+		12D7A0D923E1F02800C4AFC7 /* LoadingReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12D7A0D723E1F02800C4AFC7 /* LoadingReusableView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +86,8 @@
 		12A99DA623DA130000598848 /* RequestSerializerJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestSerializerJson.swift; sourceTree = "<group>"; };
 		12A99DAB23DA193B00598848 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		12A99DAC23DA193B00598848 /* ResponseParserJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParserJson.swift; sourceTree = "<group>"; };
+		12D7A0D623E1F02800C4AFC7 /* LoadingReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingReusableView.swift; sourceTree = "<group>"; };
+		12D7A0D723E1F02800C4AFC7 /* LoadingReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingReusableView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,8 @@
 				12084ED223DC59DF0055E541 /* ImageStoryboard.storyboard */,
 				12084ED423DCAF270055E541 /* ImageCell.swift */,
 				12084ED623DCAF3A0055E541 /* ImageCell.xib */,
+				12D7A0D623E1F02800C4AFC7 /* LoadingReusableView.swift */,
+				12D7A0D723E1F02800C4AFC7 /* LoadingReusableView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 				12084ED323DC59DF0055E541 /* ImageStoryboard.storyboard in Resources */,
 				129319D723D8C3CB003AE55F /* Assets.xcassets in Resources */,
 				12084ED723DCAF3A0055E541 /* ImageCell.xib in Resources */,
+				12D7A0D923E1F02800C4AFC7 /* LoadingReusableView.xib in Resources */,
 				129319D523D8C3CA003AE55F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +419,7 @@
 				12A99DAE23DA193B00598848 /* ResponseParserJson.swift in Sources */,
 				12084EC523DC1F340055E541 /* ImageCollectionService.swift in Sources */,
 				12084ECA23DC2EAF0055E541 /* GenericParser.swift in Sources */,
+				12D7A0D823E1F02800C4AFC7 /* LoadingReusableView.swift in Sources */,
 				12084EC823DC2E6A0055E541 /* ImageCollectionModel.swift in Sources */,
 				12A99D9A23D9F58700598848 /* BaseService.swift in Sources */,
 				126DD12423DD86500021028B /* ImageDownloadManager.swift in Sources */,

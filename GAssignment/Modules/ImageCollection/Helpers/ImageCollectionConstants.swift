@@ -8,8 +8,11 @@
 
 import Foundation
 struct ImageCollectionConstants {
-    static let clientId = "50f8710e002b68dab8e6cd62cc38fe9c46538c7014603dd190d59f5467f5b543"
-    static let strClientId = "client_id"
+    static let clientId = "15075472-786aafdafa5ad9e89f29be69f"
+    static let key = "key"
     static let perPage = "per_page"
     static let page = "page"
+    static let image_type = "image_type"
+    static let photo = "photo"
+    static let pretty = "pretty"
 }

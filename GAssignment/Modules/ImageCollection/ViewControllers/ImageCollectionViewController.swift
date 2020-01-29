@@ -9,10 +9,13 @@
 import UIKit
 
 class ImageCollectionViewController: UIViewController {
-    
+
+    var loadingView: LoadingReusableView?
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.register(UINib(nibName: ImageCell.reuseIdentifier, bundle:nil), forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
+            collectionView.register(UINib(nibName: LoadingReusableView.reuseIdentifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
+
         }
     }
     @IBOutlet weak var activityView: UIActivityIndicatorView!
@@ -22,14 +25,20 @@ class ImageCollectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Assignment"
+        
+        callAPIToGetImages(for: viewModel.currentPage)
+    }
+    
+    func callAPIToGetImages(for page: Int) {
+        print("current page \(page)")
         activityView.startAnimating()
-        viewModel.callGetAllImages { [weak self] (success) in
-            print(success)
+        viewModel.callGetAllImages(page: page, completion: { [weak self] (success) in
             DispatchQueue.main.async {
                 self?.activityView.stopAnimating()
                 self?.collectionView.reloadData()
             }
-        }
+        })
     }
     
 }
@@ -44,14 +53,44 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell
         cell!.backgroundColor = .black
         // Configure the cell
-        
+        cell?.activityIndicator.startAnimating()
         ImageDownloadManager.shared.downloadImage(viewModel.allImages?[indexPath.item], indexPath: indexPath) { (image, url, indexPath, error) in
             DispatchQueue.main.async {
                 cell?.imageView.image = image
+                cell?.activityIndicator.stopAnimating()
             }
         }
         
         return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let lastRowIndex = collectionView.numberOfItems(inSection: 0) - 1
+        if indexPath.row == lastRowIndex && !viewModel.isLoading {
+            loadMoreData()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            let aFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as! LoadingReusableView
+            loadingView = aFooterView
+            loadingView?.backgroundColor = UIColor.clear
+            return aFooterView
+        }
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.loadingView?.activityIndicator.startAnimating()
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionFooter {
+            self.loadingView?.activityIndicator.stopAnimating()
+        }
     }
     
 }
@@ -61,10 +100,6 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
     // Method to return size of each cell
     // responsible for telling the layout the size of a given cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // here you work out the total amount of space taken up by padding
-        // there will be n + 1 evenly sized spaces, where n is the number of items in the row
-        // the space size can be taken from the left section inset
-        // subtracting this from the view's width and dividing by the number of items in a row gives you the width for each item
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
@@ -81,29 +116,41 @@ extension ImageCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if viewModel.isLoading {
+            return CGSize.zero
+        } else {
+            return CGSize(width: collectionView.bounds.size.width, height: 55)
+        }
+    }
 }
 
 //// MARK: UICollectionViewDataSourcePrefetching
-//extension ImageCollectionViewController: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        for indexPath in indexPaths {
-//            ImageDownloadManager().downloadImage(viewModel.allImages?[indexPath.item], indexPath: indexPath) { (_, _, _, _) in
-//
-//            }
-//        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-//        for indexPath in indexPaths {
-//            guard let imageLoadOperation = imageLoadOperations[indexPath] else {
-//                return
-//            }
-//            imageLoadOperation.cancel()
-//            imageLoadOperations.removeValue(forKey: indexPath)
-//
-//            if Feature.debugCellLifecycle.isEnabled {
-//                print(String.init(format: "cancelPrefetchingForItemsAt #%i", indexPath.row))
-//            }
-//        }
-//    }
-//}
+extension ImageCollectionViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            ImageDownloadManager.shared.downloadImage(viewModel.allImages?[indexPath.item], indexPath: indexPath) { (_, _, _, _) in
+
+            }
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let photo = viewModel.allImages?[indexPath.item] else {
+                return
+            }
+            ImageDownloadManager.shared.slowDownImageDownloadTaskfor(photo)
+        }
+    }
+}
+extension ImageCollectionViewController {
+    func loadMoreData() {
+        if !viewModel.isLoading {
+            viewModel.isLoading = true
+            viewModel.currentPage += 1
+            callAPIToGetImages(for: viewModel.currentPage)
+        }
+    }
+}

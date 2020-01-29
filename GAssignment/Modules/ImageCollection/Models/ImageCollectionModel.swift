@@ -7,15 +7,12 @@
 //
 
 import Foundation
+struct Response: Codable
+{
+    var hits: [Image]
+}
 struct Image: Codable {
-    var urls: URLS
     var id: String
+    var previewURL: String?
+    var largeImageURL: String?
 }
-struct URLS: Codable {
-    var raw: String?
-    var full: String?
-    var regular: String?
-    var small: String?
-    var thumb: String?
-}
-

@@ -24,7 +24,7 @@ final class ImageDownloadManager {
     
     func downloadImage(_ photo: Image?, indexPath: IndexPath?, size: String = "m", handler: @escaping ImageDownloadHandler) {
 //        self.completionHandler = handler
-        guard let image = photo, let strUrl = image.urls.thumb, let url = URL(string: strUrl)  else {
+        guard let image = photo, let strUrl = image.previewURL, let url = URL(string: strUrl)  else {
             return
         }
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
@@ -56,7 +56,7 @@ final class ImageDownloadManager {
     
     /* FUNCTION to reduce the priority of the network operation in case the user scrolls and an image is no longer visible. */
     func slowDownImageDownloadTaskfor (_ photo: Image) {
-        guard let strUrl = photo.urls.small, let url = URL(string: strUrl)  else {
+        guard let strUrl = photo.previewURL, let url = URL(string: strUrl)  else {
             return
         }
         if let operations = (imageDownloadQueue.operations as? [PWOperation])?.filter({$0.imageUrl.absoluteString == url.absoluteString && $0.isFinished == false && $0.isExecuting == true }), let operation = operations.first {

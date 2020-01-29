@@ -1,6 +1,6 @@
 //
 //  APIClient.swift
-//  Assignment
+//  GAssignment
 //
 //  Created by Pankaj Wadhwa on 1/23/20.
 //  Copyright © 2020 Pankaj Wadhwa. All rights reserved.
@@ -13,6 +13,7 @@ class APIClient: NetworkClientProtocol {
     static let sharedInstance = APIClient()
     private init() {}
     
+    @discardableResult
     func callService(_ service: Service, withCallback serviceResponse: @escaping ServiceResponseObject) -> URLSessionDataTask? {
         let request = createRequest(service)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

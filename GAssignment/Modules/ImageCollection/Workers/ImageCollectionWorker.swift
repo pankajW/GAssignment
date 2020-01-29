@@ -8,7 +8,7 @@
 
 class ImageCollectionWorker {
         
-    static func getAllImages(callBack: @escaping ServiceResponseObject) {
-        APIClient.sharedInstance.callService(ImageCollectionService(), withCallback: callBack)
+    static func getAllImages(page: Int, callBack: @escaping ServiceResponseObject) {
+        APIClient.sharedInstance.callService(ImageCollectionService(page: page), withCallback: callBack)
     }
 }
