@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81Q-Yd-XVo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="81Q-Yd-XVo">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,7 +46,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Hhn-cb-48L"/>
                     </view>
-                    <navigationItem key="navigationItem" id="86B-ZV-k1D"/>
+                    <navigationItem key="navigationItem" id="86B-ZV-k1D">
+                        <barButtonItem key="rightBarButtonItem" title="Refresh" id="C7l-ao-Uw7">
+                            <connections>
+                                <action selector="btnRefreshClicked:" destination="Ms4-Ye-WME" id="orn-we-xSx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityView" destination="ynu-i9-13E" id="oBY-ER-4YK"/>
                         <outlet property="collectionView" destination="Ttj-VS-S3u" id="4E6-Rm-e9E"/>

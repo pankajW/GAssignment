@@ -12,9 +12,5 @@ class LoadingReusableView: UICollectionReusableView {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     static let reuseIdentifier = "LoadingReusableView"
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
 }

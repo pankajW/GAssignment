@@ -9,35 +9,37 @@
 import UIKit
 
 class ImageCollectionViewController: UIViewController {
-
+    
     var loadingView: LoadingReusableView?
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
             collectionView.register(UINib(nibName: ImageCell.reuseIdentifier, bundle:nil), forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
             collectionView.register(UINib(nibName: LoadingReusableView.reuseIdentifier, bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
-
+            collectionView.prefetchDataSource = self
+            
         }
     }
     @IBOutlet weak var activityView: UIActivityIndicatorView!
+    @IBAction func btnRefreshClicked(_ sender: UIBarButtonItem) {
+        viewModel.currentPage = 0
+        callAPIToGetImages(for: viewModel.currentPage)
+    }
+    
     let viewModel = ImageCollectionViewModel()
     var itemsPerRow: CGFloat = 4
     let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Assignment"
-        
         callAPIToGetImages(for: viewModel.currentPage)
     }
     
     func callAPIToGetImages(for page: Int) {
-        print("current page \(page)")
-//        activityView.startAnimating()
         viewModel.callGetAllImages(page: page, completion: { [weak self] (success) in
             self?.viewModel.isLoading = false
             print(success)
             DispatchQueue.main.async {
-                self?.activityView.stopAnimating()
                 self?.loadingView?.activityIndicator.stopAnimating()
                 if success {
                     self?.viewModel.currentPage += 1
@@ -50,28 +52,21 @@ class ImageCollectionViewController: UIViewController {
 }
 // MARK: - UICollectionViewDataSource
 extension ImageCollectionViewController: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell
-        cell!.backgroundColor = .black
-        // Configure the cell
-        cell?.activityIndicator.startAnimating()
-        ImageDownloadManager.shared.downloadImage(viewModel.allImages?[indexPath.item], indexPath: indexPath) { (image, url, indexPath, error) in
-            DispatchQueue.main.async {
-                cell?.imageView.image = image
-                cell?.activityIndicator.stopAnimating()
-            }
-        }
-        
+        guard let image = viewModel.allImages?[indexPath.item] else { return cell! }
+        cell?.indexPath = indexPath
+        cell?.configure(data: image)
         return cell!
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let lastRowIndex = collectionView.numberOfItems(inSection: 0) - 10
+        let lastRowIndex = collectionView.numberOfItems(inSection: 0) - 8
         if indexPath.row == lastRowIndex && !viewModel.isLoading {
             loadMoreData()
         }
@@ -92,7 +87,7 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
             self.loadingView?.activityIndicator.startAnimating()
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
         if elementKind == UICollectionView.elementKindSectionFooter {
             self.loadingView?.activityIndicator.stopAnimating()
@@ -137,18 +132,24 @@ extension ImageCollectionViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             ImageDownloadManager.shared.downloadImage(viewModel.allImages?[indexPath.item], indexPath: indexPath) { (_, _, _, _) in
-
+                
             }
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            guard let photo = viewModel.allImages?[indexPath.item] else {
-                return
-            }
-            ImageDownloadManager.shared.slowDownImageDownloadTaskfor(photo)
+            do {
+                let photo = try fetchImageAtIndexPath(indexPath: indexPath)
+                ImageDownloadManager.shared.slowDownImageDownloadTaskfor(photo)
+            } catch { }
+            
+            
         }
+    }
+    
+    func fetchImageAtIndexPath(indexPath: IndexPath) throws -> Image {
+        return (viewModel.allImages?[indexPath.item])!
     }
 }
 extension ImageCollectionViewController {

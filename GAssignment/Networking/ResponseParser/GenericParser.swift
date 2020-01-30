@@ -9,7 +9,6 @@ import Foundation
 class GenericParser<T: Decodable>: ResponseParser {
     
     func parse(_ data: Data) -> Any? {
-        print(dataToJSON(data: data)!)
         do {
             let decodeData = try data.decode() as T
             return decodeData

@@ -12,13 +12,18 @@ class ImageCell: UICollectionViewCell, ConfigurableCell {
     static let reuseIdentifier = "ImageCell"
     
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    override func prepareForReuse() {
-        imageView.image = nil
-    }
+    var indexPath: IndexPath?
     
     func configure(data: Image) {
+        backgroundColor = .black
+        activityIndicator.startAnimating()
+        imageView.image = nil
+        ImageDownloadManager.shared.downloadImage(data, indexPath: indexPath) { [weak self] (image, url, indexPath, error) in
+            DispatchQueue.main.async {
+                self?.imageView.image = image
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
 }
