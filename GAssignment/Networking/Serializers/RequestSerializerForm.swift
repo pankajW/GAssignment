@@ -43,7 +43,6 @@ class RequestSerializerForm: RequestSerializer {
         guard let encoded = string.addingPercentEncoding(withAllowedCharacters: customCharacterSet) else {
             return string
         }
-        
         return encoded
     }
 }

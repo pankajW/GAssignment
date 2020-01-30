@@ -10,7 +10,6 @@ class ImageCollectionService: BaseService {
     init(page: Int) {
         super.init()
         self.responseParser = GenericParser<Response>()
-        
-        self.requestParams = [ImageCollectionConstants.key: ImageCollectionConstants.clientId, ImageCollectionConstants.page: "\(page)", ImageCollectionConstants.perPage: "3", ImageCollectionConstants.image_type: ImageCollectionConstants.photo, ImageCollectionConstants.pretty: "true"] as [String: AnyObject]
+        self.requestParams = [ImageCollectionConstants.key: ImageCollectionConstants.clientId, ImageCollectionConstants.page: "\(page+1)", ImageCollectionConstants.perPage: "\(50)", ImageCollectionConstants.image_type: ImageCollectionConstants.photo, ImageCollectionConstants.pretty: "true"] as [String: AnyObject]
     }
 }

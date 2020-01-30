@@ -15,8 +15,10 @@ class ImageCell: UICollectionViewCell, ConfigurableCell {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
     
     func configure(data: Image) {
-//        ImageDownloadManager.shared.downloadImage(image: data, indexPath: IndexPath(item: 0, section: 0))
     }
 }

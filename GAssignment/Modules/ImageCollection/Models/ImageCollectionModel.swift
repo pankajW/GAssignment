@@ -12,7 +12,7 @@ struct Response: Codable
     var hits: [Image]
 }
 struct Image: Codable {
-    var id: String
+    var id: Int
     var previewURL: String?
     var largeImageURL: String?
 }

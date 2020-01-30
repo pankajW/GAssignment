@@ -32,11 +32,17 @@ class ImageCollectionViewController: UIViewController {
     
     func callAPIToGetImages(for page: Int) {
         print("current page \(page)")
-        activityView.startAnimating()
+//        activityView.startAnimating()
         viewModel.callGetAllImages(page: page, completion: { [weak self] (success) in
+            self?.viewModel.isLoading = false
+            print(success)
             DispatchQueue.main.async {
                 self?.activityView.stopAnimating()
-                self?.collectionView.reloadData()
+                self?.loadingView?.activityIndicator.stopAnimating()
+                if success {
+                    self?.viewModel.currentPage += 1
+                    self?.collectionView.reloadData()
+                }
             }
         })
     }
@@ -65,7 +71,7 @@ extension ImageCollectionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let lastRowIndex = collectionView.numberOfItems(inSection: 0) - 1
+        let lastRowIndex = collectionView.numberOfItems(inSection: 0) - 10
         if indexPath.row == lastRowIndex && !viewModel.isLoading {
             loadMoreData()
         }
@@ -149,7 +155,6 @@ extension ImageCollectionViewController {
     func loadMoreData() {
         if !viewModel.isLoading {
             viewModel.isLoading = true
-            viewModel.currentPage += 1
             callAPIToGetImages(for: viewModel.currentPage)
         }
     }
